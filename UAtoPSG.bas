@@ -178,7 +178,9 @@ Dim COL As Integer
             "PivotStyleMedium2"
     ActiveSheet.PivotTables(TCD).HasAutoFormat = False
     With ActiveSheet.PivotTables(TCD).PivotFields("COMMUNES")
+        On Error Resume Next
         .PivotItems("(blank)").Visible = False
+        On Error GoTo 0
     End With
     ActiveSheet.PivotTables(TCD).ColumnGrand = True
                 
@@ -214,7 +216,9 @@ Dim COL As Integer
         .Position = 2
     End With
     With ActiveSheet.PivotTables(TCD).PivotFields("DEP_NOM")
+        On Error Resume Next
         .PivotItems("(blank)").Visible = False
+        On Error GoTo 0
     End With
     
     ActiveSheet.PivotTables(TCD).AddDataField ActiveSheet. _
@@ -273,6 +277,13 @@ Dim COL As Integer
             TableName:=TCD, DefaultVersion:=verss
     
     'Entrée des valeurs
+    With ActiveSheet.PivotTables(TCD).PivotFields("OCCUP_SOL")
+        .Orientation = xlPageField
+        .Position = 1
+    End With
+    ActiveSheet.PivotTables(TCD).PivotFields("OCCUP_SOL").ClearAllFilters
+    ActiveSheet.PivotTables(TCD).PivotFields("OCCUP_SOL").CurrentPage = "BOISEE"
+    
     With ActiveSheet.PivotTables(TCD).PivotFields("N_PARFOR")
         .Orientation = xlRowField
         .Position = 1
@@ -281,8 +292,10 @@ Dim COL As Integer
         .Orientation = xlRowField
         .Position = 2
     End With
-        With ActiveSheet.PivotTables(TCD).PivotFields("COM_NOM")
+    With ActiveSheet.PivotTables(TCD).PivotFields("COM_NOM")
+        On Error Resume Next
         .PivotItems("(blank)").Visible = False
+        On Error GoTo 0
     End With
     With ActiveSheet.PivotTables(TCD).PivotFields("PARCA")
         .Orientation = xlRowField
@@ -334,36 +347,106 @@ Dim COL As Integer
         If Cells(ra + 1, 2) <> Cells(ra, 2) Then
             Cells(rpf, 8) = pf
             
-            Range(Cells(rpf + 1, 7), Cells(ra, 7)).Select
-            Selection.ClearContents
+            If rpf <> ra Then
+                Range(Cells(rpf + 1, 7), Cells(ra, 7)).Select
+                Selection.ClearContents
             
-            Range(Cells(rpf, 7), Cells(ra, 7)).Select
-            With Selection
-                .HorizontalAlignment = xlCenter
-                .VerticalAlignment = xlBottom
-                .WrapText = False
-                .Orientation = 0
-                .AddIndent = False
-                .IndentLevel = 0
-                .ShrinkToFit = False
-                .ReadingOrder = xlContext
-                .MergeCells = False
-            End With
-            Selection.Merge
+                Range(Cells(rpf, 7), Cells(ra, 7)).Select
+                With Selection
+                    .HorizontalAlignment = xlCenter
+                    .VerticalAlignment = xlCenter
+                End With
+                Selection.Merge
+                
+                Range(Cells(rpf, 8), Cells(ra, 8)).Select
+                With Selection
+                    .HorizontalAlignment = xlCenter
+                    .VerticalAlignment = xlCenter
+                End With
+                Selection.Merge
+            End If
             
-            Range(Cells(rpf, 8), Cells(ra, 8)).Select
-            With Selection
-                .HorizontalAlignment = xlCenter
-                .VerticalAlignment = xlBottom
-                .WrapText = False
-                .Orientation = 0
-                .AddIndent = False
-                .IndentLevel = 0
-                .ShrinkToFit = False
-                .ReadingOrder = xlContext
-                .MergeCells = False
+            Range(Cells(rpf, 7), Cells(ra, 11)).Select
+            Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+            Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+            With Selection.Borders(xlEdgeLeft)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlMedium
             End With
-            Selection.Merge
+            With Selection.Borders(xlEdgeTop)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlMedium
+            End With
+            With Selection.Borders(xlEdgeBottom)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlMedium
+            End With
+            With Selection.Borders(xlEdgeRight)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlMedium
+            End With
+            With Selection.Borders(xlInsideVertical)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlHairline
+            End With
+            With Selection.Borders(xlInsideHorizontal)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlHairline
+            End With
+            Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+            Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+
+            Range(Cells(rpf, 7), Cells(ra, 8)).Select
+            Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+            Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+            With Selection.Borders(xlEdgeLeft)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlMedium
+            End With
+            With Selection.Borders(xlEdgeTop)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlMedium
+            End With
+            With Selection.Borders(xlEdgeBottom)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlMedium
+            End With
+            With Selection.Borders(xlEdgeRight)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlMedium
+            End With
+            With Selection.Borders(xlInsideVertical)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlHairline
+            End With
+            With Selection.Borders(xlInsideHorizontal)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlHairline
+            End With
             
             rpf = ra + 1
             pf = 0
@@ -396,35 +479,13 @@ Dim COL As Integer
     Selection.Style = "Accent1"
     Columns("G:H").Select
     With Selection
-        .VerticalAlignment = xlTop
-        .WrapText = False
-        .Orientation = 0
-        .AddIndent = False
-        .IndentLevel = 0
-        .ShrinkToFit = False
-        .ReadingOrder = xlContext
-    End With
-    With Selection
         .HorizontalAlignment = xlLeft
         .VerticalAlignment = xlTop
-        .WrapText = False
-        .Orientation = 0
-        .AddIndent = False
-        .IndentLevel = 0
-        .ShrinkToFit = False
-        .ReadingOrder = xlContext
     End With
     Columns("K:K").Select
     With Selection
         .HorizontalAlignment = xlRight
         .VerticalAlignment = xlTop
-        .WrapText = False
-        .Orientation = 0
-        .AddIndent = False
-        .IndentLevel = 0
-        .ShrinkToFit = False
-        .ReadingOrder = xlContext
-        .MergeCells = False
     End With
     Selection.NumberFormat = "0.0000"
             
@@ -436,6 +497,112 @@ Dim COL As Integer
     Selection.Columns.AutoFit
     
     Cells(1, 1) = "Correspondance parcelles forestières/parcelles cadastrales"
+
+'##### Création de PCF #####
+    'Création de la feuille de traitement
+    Sheets.Add After:=Sheets(Sheets.Count)
+    ActiveSheet.Name = "PCF"
+    
+    Sheets("PC-PF").Select
+    Columns("G:L").Select
+    Application.CutCopyMode = False
+    Selection.Cut
+    Sheets("PCF").Select
+    ActiveSheet.Paste
+    
+    Columns("A:A").Select
+    With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+    End With
+    
+    Columns("B:B").Select
+    With Selection
+        .HorizontalAlignment = xlRight
+        .VerticalAlignment = xlCenter
+    End With
+    
+    Columns("C:C").Select
+    With Selection
+        .HorizontalAlignment = xlLeft
+        .VerticalAlignment = xlCenter
+    End With
+    
+    Columns("D:D").Select
+    With Selection
+        .HorizontalAlignment = xlLeft
+        .VerticalAlignment = xlCenter
+    End With
+    
+    Columns("E:E").Select
+    With Selection
+        .HorizontalAlignment = xlGeneral
+        .VerticalAlignment = xlCenter
+    End With
+    
+    Columns("A:E").Select
+    With Selection.Font
+        .Name = "Calibri"
+        .Size = 10
+    End With
+    
+    Range("A5:E5").Select
+    Selection.Style = "Normal"
+    Selection.Font.Bold = True
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlInsideVertical)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlHairline
+    End With
+    With Selection.Borders(xlInsideHorizontal)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlHairline
+    End With
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    
+    Rows("1:2").Select
+    Selection.Delete Shift:=xlUp
+    Range("A1").FormulaR1C1 = _
+        "CORRESPONDANCE PARCELLE FORESTIERE / PARCELLE CADASTRALE"
+    Range("A1:E1").Select
+    With Selection
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+    End With
+    Selection.Merge
+    Selection.Font.Bold = True
+    With Selection.Font
+        .Name = "Calibri"
+        .Size = 14
+    End With
 
 '##### Création de PF #####
     
@@ -647,6 +814,226 @@ Dim COL As Integer
     Selection.Columns.AutoFit
     
     Cells(1, 1) = "Répartition des surfaces par peuplements et parcelles forestières"
+
+'##### Création de PLTPF #####
+
+    'Création de la feuille
+    Sheets("PLT-PF").Select
+    Sheets("PLT-PF").Copy After:=Sheets(8)
+    Sheets("PLT-PF (2)").Select
+    Sheets("PLT-PF (2)").Name = "PFPLT"
+    
+    'Transposition des titres
+    ActiveSheet.PivotTables("TCD_PLT-PF").PivotFields("OCCUPATION DU SOL"). _
+        Orientation = xlHidden
+    With ActiveSheet.PivotTables("TCD_PLT-PF").PivotFields("N_PARFOR")
+        .Orientation = xlRowField
+        .Position = 2
+    End With
+    With ActiveSheet.PivotTables("TCD_PLT-PF").PivotFields("PEUPLEMENTS")
+        .Orientation = xlColumnField
+        .Position = 1
+    End With
+    
+    'Comptage des lignes
+    Range("B6").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Range(Selection, Selection.End(xlToRight)).Select
+    
+    ROW = Selection.Rows.Count
+    COLUMN = Selection.Columns.Count
+
+    Selection.Copy
+    Cells(6, COLUMN + 3).Select
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, Transpose:=False
+        
+    Range(Cells(1, 1), Cells(1, COLUMN + 2)).EntireColumn.Select
+    Selection.Delete Shift:=xlToLeft
+    Rows("1:3").Select
+    Selection.Delete Shift:=xlUp
+    
+    'Création ligne proportion
+    For i = 2 To COLUMN
+        Cells(ROW + 3, i).FormulaR1C1 = "=R[-1]C/MAX(R[-1])"
+    Next
+    Cells(ROW + 3, 1) = "Proportion"
+    Range(Cells(ROW + 3, 2), Cells(ROW + 3, COLUMN)).Select
+    Selection.Style = "Percent"
+    Selection.NumberFormat = "0.0%"
+    
+    'Mise en forme
+    Range("A3").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Range(Selection, Selection.End(xlToRight)).Select
+    
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlInsideVertical)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlHairline
+    End With
+    With Selection.Borders(xlInsideHorizontal)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlHairline
+    End With
+    Selection.Font.Size = 10
+    
+    Range("A3").Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    Selection.Font.Bold = True
+    
+    Range("A3").Select
+    Range(Selection, Selection.End(xlToRight)).Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    Selection.Font.Bold = True
+    Selection.Font.Size = 11
+    
+    Cells(3, COLUMN).Select
+    Range(Selection, Selection.End(xlDown)).Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    Selection.Font.Bold = True
+    
+    Range(Cells(ROW + 2, 1), Cells(ROW + 3, COLUMN)).Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
+    Selection.Font.Bold = True
+    
+    Columns("A:Z").Select
+    Selection.Columns.AutoFit
+    
+    Range("A1").Select
+    ActiveCell.FormulaR1C1 = "CORRESPONDANCE PARCELLE / PEUPLEMENTS"
+    Selection.Font.Bold = True
+    Selection.Font.Size = 14
 
 '##### Création de PLT-PC #####
     
